@@ -1,32 +1,43 @@
 "use client";
+
 import SearchBar from "./SearchBar";
 import { surahPages } from "@/data/surahPages";
-
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-
 import MushafImage from "./MushafImage";
 import MushafFooter from "./MushafFooter";
+import MushafWelcome from "./MushafWelcome";
 import { TOTAL_PAGES } from "./types";
 
 export default function MushafViewer() {
   const [page, setPage] = useState(1);
-const [search, setSearch] = useState("");
-const filteredSurahs = surahPages.filter((surah) =>
-  surah.name.includes(search.trim())
-);
-const isPageNumber =
-  /^\d+$/.test(search.trim()) &&
-  Number(search) >= 1 &&
-  Number(search) <= 605;
+  const [search, setSearch] = useState("");
 
-  // تحميل آخر صفحة
+  const [showWelcome, setShowWelcome] = useState(false);
+  const [dontShowAgain, setDontShowAgain] = useState(false);
+
+  const filteredSurahs = surahPages.filter((surah) =>
+    surah.name.includes(search.trim())
+  );
+
+  const isPageNumber =
+    /^\d+$/.test(search.trim()) &&
+    Number(search) >= 1 &&
+    Number(search) <= 605;
+
+  // تحميل آخر صفحة + رسالة الترحيب
   useEffect(() => {
     const lastPage = localStorage.getItem("lastMushafPage");
 
     if (lastPage) {
       setPage(Number(lastPage));
+    }
+
+    const hideWelcome = localStorage.getItem("hideMushafWelcome");
+
+    if (!hideWelcome) {
+      setShowWelcome(true);
     }
   }, []);
 
@@ -50,102 +61,117 @@ const isPageNumber =
   return (
     <main
       className="
-      min-h-screen
-      bg-gradient-to-br
-      from-[#faf7ef]
-      via-[#eee5d4]
-      to-[#d9c9ad]
-      flex
-      justify-center
-      items-center
-      p-3
-    "
+        min-h-screen
+        bg-gradient-to-br
+        from-[#faf7ef]
+        via-[#eee5d4]
+        to-[#d9c9ad]
+        flex
+        justify-center
+        items-center
+        p-3
+      "
     >
       <div
         className="
-        w-[98vw]
-        max-w-[620px]
-      "
+          w-[98vw]
+          max-w-[620px]
+        "
       >
-      <SearchBar
-  value={search}
-  onChange={setSearch}
-/>  
-{search.trim() && (
-  <div
-    className="
-      mt-2
-      overflow-hidden
-      rounded-2xl
-      bg-white
-      shadow-lg
-      border
-      border-slate-200
-    "
-  >{isPageNumber && (
-  <button
-    onClick={() => {
-      setPage(Number(search));
-      setSearch("");
-    }}
-    className="
-      flex
-      w-full
-      items-center
-      justify-between
-      px-4
-      py-3
-      bg-emerald-50
-      hover:bg-emerald-100
-      transition
-    "
-  >
-    <span className="font-bold">
-      📄 الانتقال للصفحة
-    </span>
+        <SearchBar value={search} onChange={setSearch} />
 
-    <span className="text-emerald-700 font-bold">
-      {search}
-    </span>
-  </button>
-)}
-    {filteredSurahs.length > 0 ? (
-        
-      filteredSurahs.map((surah) => (
-        <button
-          key={surah.id}
-          onClick={() => {
-            setPage(surah.page);
-            setSearch("");
-          }}
-          className="
-            flex
-            w-full
-            items-center
-            justify-between
-            px-4
-            py-3
-            hover:bg-emerald-50
-            transition
-          "
-        >
-          <span className="font-bold">
-            {surah.name}
-          </span>
+        {search.trim() && (
+          <div
+            className="
+              mt-2
+              overflow-hidden
+              rounded-2xl
+              bg-white
+              shadow-lg
+              border
+              border-slate-200
+            "
+          >
+            {isPageNumber && (
+              <button
+                onClick={() => {
+                  setPage(Number(search));
+                  setSearch("");
+                }}
+                className="
+                  flex
+                  w-full
+                  items-center
+                  justify-between
+                  px-4
+                  py-3
+                  bg-emerald-50
+                  hover:bg-emerald-100
+                  transition
+                "
+              >
+                <span className="font-bold">
+                  📄 الانتقال للصفحة
+                </span>
 
-          <span className="text-sm text-slate-500">
-            صفحة {surah.page}
-          </span>
-        </button>
-      ))
-    ) : (
-      <div className="p-4 text-center text-slate-500">
-    
-        لا توجد نتائج
-      </div>
-    )}
-  </div>
-)}
+                <span className="text-emerald-700 font-bold">
+                  {search}
+                </span>
+              </button>
+            )}
+
+            {filteredSurahs.length > 0 ? (
+              filteredSurahs.map((surah) => (
+                <button
+                  key={surah.id}
+                  onClick={() => {
+                    setPage(surah.page);
+                    setSearch("");
+                  }}
+                  className="
+                    flex
+                    w-full
+                    items-center
+                    justify-between
+                    px-4
+                    py-3
+                    hover:bg-emerald-50
+                    transition
+                  "
+                >
+                  <span className="font-bold">
+                    {surah.name}
+                  </span>
+
+                  <span className="text-sm text-slate-500">
+                    صفحة {surah.page}
+                  </span>
+                </button>
+              ))
+            ) : (
+              <div className="p-4 text-center text-slate-500">
+                لا توجد نتائج
+              </div>
+            )}
+          </div>
+        )}
+
+        {showWelcome && (
+          <MushafWelcome
+            dontShow={dontShowAgain}
+            setDontShow={setDontShowAgain}
+            onClose={() => {
+              if (dontShowAgain) {
+                localStorage.setItem(
+                  "hideMushafWelcome",
+                  "true"
+                );
+              }
+
+              setShowWelcome(false);
+            }}
+          />
+        )}
 
         <AnimatePresence mode="wait">
           <motion.div

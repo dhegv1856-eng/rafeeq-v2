@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">رفيق�</string>
+    <string name="title_activity_main">رفيق�</string>
+    <string name="package_name">com.rafeeq.app</string>
+    <string name="custom_url_scheme">com.rafeeq.app</string>
+</resources>

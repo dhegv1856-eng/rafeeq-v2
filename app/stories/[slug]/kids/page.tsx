@@ -1,7 +1,11 @@
 import { notFound } from "next/navigation";
 import prophets from "@/data/prophets";
 import { prophetVideos } from "@/data/prophetVideos";
-
+export function generateStaticParams() {
+  return prophets.map((prophet) => ({
+    slug: prophet.slug,
+  }));
+}
 export default async function KidsStory({
   params,
 }: {

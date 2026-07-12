@@ -7,6 +7,7 @@ import { readers } from "@/data/readers";
 import { surahs } from "@/data/surahs";
 import AudioPlayer from "@/components/readers/AudioPlayer";
 
+
 type Props = {
   params: Promise<{
     name: string;

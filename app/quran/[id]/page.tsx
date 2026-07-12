@@ -4,6 +4,11 @@ type Props = {
   }>;
 };
 import Verse from "@/components/quran/Verse";
+export function generateStaticParams() {
+  return Array.from({ length: 114 }, (_, i) => ({
+    id: String(i + 1),
+  }));
+}
 async function getChapter(id: string) {
   const res = await fetch(
     `https://api.quran.com/api/v4/chapters/${id}`,
