@@ -148,11 +148,11 @@ const smileCount = 0;
 
   <CategoryItem
                       title="لا إله إلا الله وحده لا شريك له، له الملك وله الحمد"
-                      count={Number(localStorage.getItem("jannah-subhanallah-alazim")) || 0}
+                   count={laIlahaIllallahAlhamd}
                       href="/jannah/subhanallah-alazim" icon={""}  />
   <CategoryItem
                       title="لا إله إلا الله العلي العظيم"
-                      count={Number(localStorage.getItem("jannah-al-ali-al-azim")) || 0}
+                     count={alAliAlAzim}
                       href="/jannah/al-ali-al-azim" icon={""}  />
 
   <CategoryItem
