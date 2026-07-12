@@ -42,27 +42,11 @@ export default function MushafViewer() {
 
         <AnimatePresence mode="wait">
 
-          <motion.img
-            key={page}
-            src={`https://rafeeq-pages.b-cdn.net/pages/${String(page).padStart(4, "0")}.jpg`}
-            initial={{
-              x: direction > 0 ? 300 : -300,
-              opacity: 0,
-            }}
-            animate={{
-              x: 0,
-              opacity: 1,
-            }}
-            exit={{
-              x: direction > 0 ? -300 : 300,
-              opacity: 0,
-            }}
-            transition={{
-              duration: 0.35,
-            }}
-            className="w-full rounded-xl shadow-2xl select-none"
-            draggable={false}
-          />
+         <img
+  src={`https://rafeeq-pages.b-cdn.net/pages/${String(page).padStart(4, "0")}.jpg`}
+  className="w-full rounded-xl shadow-2xl"
+  alt={`صفحة ${page}`}
+/>
 
         </AnimatePresence>
 
