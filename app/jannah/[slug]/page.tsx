@@ -2,11 +2,7 @@
 import { notFound } from "next/navigation";
 import { jannahData } from "@/data/jannahData";
 import Counter from "@/components/jannah/Counter";
-export function generateStaticParams() {
-  return Object.keys(jannahData).map((slug) => ({
-    slug,
-  }));
-}
+
 type Props = {
   params: Promise<{
     slug: string;
