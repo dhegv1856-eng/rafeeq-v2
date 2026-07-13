@@ -101,13 +101,13 @@ export default function SleepAzkarPage() {
 >
 
 
-          <div className="mb-8 flex items-center justify-between">
+        <div className="mb-6 flex items-center justify-between pr-6">
 
             <div className="rounded-full bg-emerald-100 px-5 py-2 font-bold text-emerald-800">
               الذكر {currentZekr + 1} من {sleepAzkar.length}
             </div>
 
-            <div className="rounded-full bg-amber-100 px-5 py-2 font-bold text-amber-800">
+          <div className="rounded-full bg-amber-100 px-5 py-2 mr-4 font-bold text-amber-800">
               🔁 المتبقي {count}
             </div>
 
